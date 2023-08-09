@@ -4,28 +4,28 @@ import React, {
   useCallback,
   useRef,
   useEffect,
-} from 'react';
-import { Modal, StyleSheet, ActivityIndicator, View } from 'react-native';
-import WebView from 'react-native-webview';
-import getTemplate from './get-template';
+} from "react";
+import { Modal, StyleSheet, ActivityIndicator, View } from "react-native";
+import WebView from "react-native-webview";
+import getTemplate from "./get-template";
 
 const styles = StyleSheet.create({
   webView: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
   },
   loading: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     bottom: 0,
     right: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
-const originWhitelist = ['*'];
+const originWhitelist = ["*"];
 
 const Recaptcha = ({
   onVerify,
@@ -36,7 +36,8 @@ const Recaptcha = ({
   baseUrl,
   lang,
   style,
-  loadingColor = '#ffffff',
+  loadingColor = "#ffffff",
+  action,
 }) => {
   const $webView = useRef();
   const [loading, setLoading] = useState(true);
@@ -51,21 +52,22 @@ const Recaptcha = ({
     return getTemplate({
       siteKey,
       lang,
+      action,
     });
-  }, [siteKey, lang]);
+  }, [siteKey, lang, action]);
 
   const handleMessage = useCallback(
     (content) => {
       try {
         const { status, payload } = JSON.parse(content.nativeEvent.data);
         switch (status) {
-          case 'loaded':
+          case "loaded":
             setLoading(false);
             break;
-          case 'verified':
+          case "verified":
             onVerify && onVerify(payload);
             break;
-          case 'failed':
+          case "failed":
             onError && onError(payload);
             break;
         }
@@ -73,7 +75,7 @@ const Recaptcha = ({
         console.warn(err);
       }
     },
-    [onVerify, onError],
+    [onVerify, onError]
   );
 
   const handleNavigationStateChange = useCallback(() => {
@@ -86,9 +88,9 @@ const Recaptcha = ({
   const handleShouldStartLoadWithRequest = useCallback(
     (event) => {
       // prevent navigation on iOS
-      return event.navigationType === 'other';
+      return event.navigationType === "other";
     },
-    [loading],
+    [loading]
   );
 
   const renderLoading = () => {

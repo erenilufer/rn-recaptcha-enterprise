@@ -1,13 +1,13 @@
 {
-  "name": "rn-recaptcha3",
+  "name": "@towerguards/rn-recaptcha3",
   "displayName": "React-Native reCAPTCHAv3",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": false,
   "license": "MIT",
   "description": "⚛ A reCAPTCHAv3 bridge for React Native.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/emmarq/rn-recaptcha3.git"
+    "url": "https://github.com/erenilufer/rn-recaptcha-enterprise.git"
   },
   "main": "index.js",
   "keywords": [

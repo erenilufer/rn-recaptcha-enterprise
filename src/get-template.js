@@ -1,4 +1,4 @@
-const getTemplate = ({ siteKey, lang }) => {
+const getTemplate = ({ siteKey, lang, action }) => {
   let template = `
   <!DOCTYPE html>
   <html lang="${lang}">
@@ -6,35 +6,33 @@ const getTemplate = ({ siteKey, lang }) => {
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>ReCaptcha</title>
+      <script src="https://www.google.com/recaptcha/enterprise.js?onload=onLoad&render=${siteKey}"></script>
       <script>
         var onLoad = function () {
           setTimeout(function () {
             window.ReactNativeWebView.postMessage(
-                JSON.stringify({ status: 'loaded', payload: {} }),
+              JSON.stringify({ status: "loaded", payload: {} })
             );
-            grecaptcha.ready(function () {
-              grecaptcha
+  
+            grecaptcha.enterprise.ready(function () {
+              grecaptcha.enterprise
                 .execute('${siteKey}', {
-                  action: 'submit',
+                  action: '${action}',
                 })
                 .then(function (token) {
                   window.ReactNativeWebView.postMessage(
-                    JSON.stringify({ status: 'verified', payload: { token } }),
+                    JSON.stringify({ status: "verified", payload: { token } })
                   );
                 })
                 .catch(function (error) {
                   window.ReactNativeWebView.postMessage(
-                    JSON.stringify({ status: 'failed', payload: { error } }),
+                    JSON.stringify({ status: "failed", payload: { error } })
                   );
                 });
             });
           }, 1000);
         };
       </script>
-      <script
-        src="https://www.google.com/recaptcha/api.js?onload=onLoad&render=${siteKey}"
-        async
-      ></script>
   
       <style>
         html,
