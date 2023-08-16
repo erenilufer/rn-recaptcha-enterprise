@@ -1,7 +1,7 @@
 {
   "name": "@towerguards/rn-recaptcha3",
   "displayName": "React-Native reCAPTCHAv3",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "private": false,
   "license": "MIT",
   "description": "⚛ A reCAPTCHAv3 bridge for React Native.",

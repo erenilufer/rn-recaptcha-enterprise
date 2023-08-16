@@ -12,7 +12,7 @@ import getTemplate from "./get-template";
 const styles = StyleSheet.create({
   webView: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.2)",
+    backgroundColor: "transparent",
   },
   loading: {
     position: "absolute",
@@ -38,6 +38,7 @@ const Recaptcha = ({
   style,
   loadingColor = "#ffffff",
   action,
+  hasRenderLoading = false,
 }) => {
   const $webView = useRef();
   const [loading, setLoading] = useState(true);
@@ -114,7 +115,11 @@ const Recaptcha = ({
             html,
             baseUrl,
           }}
-          style={[styles.webView, style]}
+          style={[
+            styles.webView,
+            hasRenderLoading && { backgroundColor: "rgba(0, 0, 0, 0.2)" },
+            style,
+          ]}
           onMessage={handleMessage}
           allowsBackForwardNavigationGestures={false}
           onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
@@ -122,7 +127,7 @@ const Recaptcha = ({
           bounces={false}
         />
       )}
-      {renderLoading()}
+      {hasRenderLoading && renderLoading()}
     </Modal>
   );
 };
